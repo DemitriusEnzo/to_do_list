@@ -1,3 +1,3 @@
 # Capturas da confirmação de exclusão
 
-Adicione aqui as cinco imagens do emulador, com os nomes indicados em `EVIDENCIAS_EXCLUSAO.md`. Em seguida, substitua os marcadores “Pendente” pelas linhas Markdown já preparadas nos comentários. Nenhuma captura foi adicionada nesta etapa.
+Este diretório contém as cinco capturas do fluxo de exclusão. Veja [`EVIDENCIAS_EXCLUSAO.md`](../../../EVIDENCIAS_EXCLUSAO.md) na raiz do projeto para a sequência, as legendas e as imagens incorporadas.

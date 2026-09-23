@@ -1,33 +1,33 @@
 # Evidências da confirmação de exclusão
 
-Após executar o aplicativo no emulador, salve as cinco capturas em [`docs/images/exclusao`](docs/images/exclusao/README.md), na sequência abaixo. Substitua cada marcador pela imagem Markdown correspondente; os caminhos já estão preparados.
+As cinco capturas abaixo mostram o fluxo de exclusão no emulador. As imagens estão em [`docs/images/exclusao`](docs/images/exclusao/README.md) e são referenciadas por caminhos relativos.
 
-1. **Lista antes da exclusão**
+## 1 Lista antes da exclusão
 
-   Pendente: `docs/images/exclusao/01_lista_antes.png`
+A lista contém as tarefas “Antiga tarefa” e “Nova tarefa”.
 
-   <!-- ![Lista antes da exclusão](docs/images/exclusao/01_lista_antes.png) -->
+![Lista antes da exclusão com duas tarefas](docs/images/exclusao/01_lista_antes.png)
 
-2. **Diálogo aberto com o título da tarefa selecionada**
+## 2 Diálogo aberto com a tarefa selecionada
 
-   Pendente: `docs/images/exclusao/02_dialogo_aberto.png`
+Ao tocar na lixeira de “Nova tarefa”, o diálogo informa qual tarefa será excluída.
 
-   <!-- ![Diálogo com a tarefa selecionada](docs/images/exclusao/02_dialogo_aberto.png) -->
+![Diálogo de confirmação para Nova tarefa](docs/images/exclusao/02_dialogo_aberto.png)
 
-3. **Resultado após tocar em Cancelar**
+## 3 Resultado ao cancelar
 
-   Pendente: `docs/images/exclusao/03_apos_cancelar.png`
+Após tocar em Cancelar, “Nova tarefa” continua na lista.
 
-   <!-- ![Tarefa preservada após cancelar](docs/images/exclusao/03_apos_cancelar.png) -->
+![Lista após cancelar a exclusão](docs/images/exclusao/03_apos_cancelar.png)
 
-4. **Nova abertura do diálogo**
+## 4 Nova abertura do diálogo
 
-   Pendente: `docs/images/exclusao/04_dialogo_reaberto.png`
+A confirmação pode ser aberta novamente para a mesma tarefa.
 
-   <!-- ![Diálogo aberto novamente](docs/images/exclusao/04_dialogo_reaberto.png) -->
+![Diálogo de confirmação aberto novamente](docs/images/exclusao/04_dialogo_reaberto.png)
 
-5. **Resultado após tocar em Excluir**
+## 5 Resultado após confirmar a exclusão
 
-   Pendente: `docs/images/exclusao/05_apos_excluir.png`
+Após tocar em Excluir, “Nova tarefa” deixa a lista e “Antiga tarefa” permanece.
 
-   <!-- ![Lista após confirmar a exclusão](docs/images/exclusao/05_apos_excluir.png) -->
+![Lista após confirmar a exclusão](docs/images/exclusao/05_apos_excluir.png)
