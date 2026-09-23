@@ -38,15 +38,36 @@ O fluxo dos dados é `Interface Compose → TarefaViewModel → TarefaRepository
 
 ## Evidências
 
-Reservei [`docs/evidencias`](docs/evidencias/README.md) para as capturas do emulador ou dispositivo. Insira as screenshots após executar os fluxos e substitua os campos abaixo pelos links das respectivas imagens.
+As capturas abaixo foram registradas no emulador e estão em [`docs/evidencias`](docs/evidencias/README.md).
 
-| Funcionalidade | Screenshot |
-| --- | --- |
-| Tela inicial e lista de tarefas | A adicionar |
-| Formulário de cadastro | A adicionar |
-| Tarefa cadastrada aparecendo na lista | A adicionar |
-| Formulário de edição de tarefa existente | A adicionar |
-| Tarefa marcada como concluída | A adicionar |
-| Exclusão de tarefa | A adicionar |
-| Navegação entre lista e formulário | A adicionar |
-| Build ou execução sem erros | A adicionar |
+### Tela inicial
+
+![Tela inicial com lista vazia](docs/evidencias/tela_inicial.png)
+
+### Formulário de cadastro
+
+![Cadastro de uma tarefa](docs/evidencias/cadastro_tarefa.png)
+
+### Tarefa cadastrada na lista
+
+![Tarefa aparecendo na lista](docs/evidencias/lista_tarefas.png)
+
+### Edição de tarefa
+
+![Formulário de edição](docs/evidencias/edicao_tarefa.png)
+
+### Tarefa concluída
+
+![Tarefa com checkbox marcado](docs/evidencias/tarefa_concluida.png)
+
+### Exclusão de tarefa
+
+![Lista após exclusão](docs/evidencias/tarefa_excluida.png)
+
+### Navegação entre telas
+
+![Navegação para o formulário](docs/evidencias/navegacao_telas.png)
+
+### Build sem erros
+
+![Resultado do build no Android Studio](docs/evidencias/build_sem_erros.png)
