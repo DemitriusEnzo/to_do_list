@@ -12,6 +12,7 @@
 - Interface em **Português**
 - Código simples, explícito e sem frameworks de injeção de dependência (sem Hilt/Koin)
 - Alunos copiam o código e rodam no próprio Android Studio com SDK próprio
+- Toda tela e todo componente reutilizável deve ter função(ões) `@Preview` para visualização isolada no Android Studio, sem precisar rodar o app num emulador
 
 ### Entity
 
@@ -112,26 +113,54 @@ com.github.DemitriusEnzo.to_do_list/
 
 ---
 
+## Convenção de Preview
+
+`@Preview` não consegue instanciar um `TarefaViewModel` de verdade (ele exige um `Context` real). Por isso, toda tela que depende do ViewModel é dividida em duas funções `@Composable` no mesmo arquivo:
+
+- **Versão stateful** (`XScreen`) — recebe o `viewModel`, coleta o `StateFlow` e delega para a versão content. É a única chamada pela navegação. **Sem `@Preview`**, pois depende do ViewModel.
+- **Versão content** (`XContent`) — recebe apenas dados simples e lambdas (nenhuma dependência de ViewModel/Context). É essa versão que leva a(s) função(ões) `@Preview`.
+
+Componentes reutilizáveis sem dependência de ViewModel (ex: `TarefaItem`) já são previewable diretamente, sem precisar de divisão.
+
+Padrão de anotação:
+
+```kotlin
+@Preview(showBackground = true, name = "Nome descritivo do estado")
+@Composable
+private fun NomeContentPreview() {
+    NomeContent(/* dados de exemplo */)
+}
+```
+
+Quando a tela tem estados visuais distintos (lista vazia vs. com itens, tarefa concluída vs. pendente, criação vs. edição), criar uma função `@Preview` por estado.
+
+`AppNavigation` e `MainActivity` não são telas nem componentes reutilizáveis — são apenas wiring de navegação/inicialização — e por isso ficam fora dessa exigência.
+
+---
+
 ## Telas
 
 ### ListaTarefasScreen
-- Coleta `viewModel.tarefas` via `collectAsStateWithLifecycle()`
+- `ListaTarefasScreen` (stateful): coleta `viewModel.tarefas` via `collectAsStateWithLifecycle()` e delega para `ListaTarefasContent`
+- `ListaTarefasContent` (previewable): recebe `tarefas: List<Tarefa>` e os callbacks `onNovaTarefa`, `onEditarTarefa`, `onCheckedChange`, `onDeletar`
 - `LazyColumn` com um item por `Tarefa`
 - Cada item exibe: `titulo`, `descricao` (truncada), `Checkbox` para `concluida`
-- Marcar checkbox dispara `viewModel.atualizar(tarefa.copy(concluida = !tarefa.concluida))`
-- Botão de deletar (ícone lixeira) por item dispara `viewModel.deletar(tarefa)`
+- Marcar checkbox dispara `onCheckedChange(tarefa, novoValor)` → na versão stateful, isso chama `viewModel.atualizar(tarefa.copy(concluida = novoValor))`
+- Botão de deletar (ícone lixeira) por item dispara `onDeletar(tarefa)` → na versão stateful, `viewModel.deletar(tarefa)`
 - `FloatingActionButton` com ícone `+` navega para `"formulario/0"`
 - Toque em item navega para `"formulario/{tarefa.id}"`
+- `TarefaItem` (componente, já previewable): exibe uma `Tarefa` isolada — previews para estado concluído e pendente
+- Previews de `ListaTarefasContent`: lista vazia, lista com tarefas (concluída + pendente)
 
 ### FormularioTarefaScreen
-- Recebe `tarefaId: Int` e `viewModel`
-- Se `tarefaId > 0`: busca a tarefa na lista de `StateFlow` e pré-preenche os campos
+- `FormularioTarefaScreen` (stateful): recebe `tarefaId: Int` e `viewModel`; busca a tarefa existente na `StateFlow` (se `tarefaId > 0`) e delega para `FormularioTarefaContent`
+- `FormularioTarefaContent` (previewable): recebe `isEdicao: Boolean`, `tituloInicial: String`, `descricaoInicial: String` e os callbacks `onSalvar(titulo, descricao)`, `onVoltar`
 - Campos: `TextField` para `titulo` (obrigatório) e `descricao`
-- Botão "Salvar":
-  - `tarefaId == 0` → `viewModel.inserir(Tarefa(titulo=..., descricao=...))`
-  - `tarefaId > 0` → `viewModel.atualizar(tarefaExistente.copy(titulo=..., descricao=...))`
+- Botão "Salvar" chama `onSalvar(titulo.trim(), descricao.trim())`:
+  - Na versão stateful, `tarefaId == 0` → `viewModel.inserir(Tarefa(titulo=..., descricao=...))`; `tarefaId > 0` → `viewModel.atualizar(tarefaExistente.copy(titulo=..., descricao=...))`
   - Após salvar: `navController.popBackStack()`
-- Botão "Voltar" (ou seta na TopAppBar): `navController.popBackStack()` sem salvar
+- Botão "Voltar" (ou seta na TopAppBar): `onVoltar()` sem salvar
+- Previews de `FormularioTarefaContent`: "Nova tarefa" (campos vazios) e "Editar tarefa" (campos pré-preenchidos)
 
 ### MainActivity
 - Cria o `TarefaViewModel` via `viewModel(factory = TarefaViewModel.factory(applicationContext))`
@@ -161,3 +190,5 @@ com.github.DemitriusEnzo.to_do_list/
 - `NavHost`, `composable`, `navController.navigate`, `popBackStack`
 - `collectAsStateWithLifecycle` para coletar Flow na UI
 - `LazyColumn` com lista reativa
+- `@Preview(showBackground = true, name = "...")` — visualização isolada de telas e componentes no Android Studio, sem rodar o app
+- Separação entre Composable "stateful" (consome ViewModel) e "content" (recebe dados/callbacks simples, é previewable)
